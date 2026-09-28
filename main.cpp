@@ -39,97 +39,57 @@ int main() {
         std::println("Tour {}!", tours);
         std::println(" ------------------");
         tours++;
-
-        //Orc's damage is calculated
-        int degats_orc = 0;
-        int jet_orc = lancer_de(10);
-
-        switch (jet_orc)
+        if (tours >= 100)
         {
-            case 1:
-                degats_orc = 0;
-                break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                std::println("Coup normal");
-                degats_orc = calculer_degats(Orc_Att, Orc_Def);
-                Troll_Pv -= degats_orc;
-                break;
-            case 10:
-                std::println("Coup critique!Degats doubles");
-                degats_orc = calculer_degats(Orc_Att, Orc_Def) * 2;
-                Troll_Pv -= degats_orc;
-                break;
-            default:
-                break;
+            std::println("Tour {}! Match null!", tours);
+            break;
         }
+        //Orc's damage is calculated
+        int orc_degats = executer_attaque(Orc_Att, Troll_Def);
+        Troll_Pv -= orc_degats;
+
         // Troll's PV cannot be below 0
         if (Troll_Pv < 0)
         {
             Troll_Pv = 0;
         }
-
-        if (jet_orc == 1) {
-            std::println("Dommage! L'orc a manque son coup!");
+        if (orc_degats == 0)
+        {
         }
+
+
         else
         {
-            std::println("L'orc attaque le troll, il lui a cause {} de degats! Troll: {} pv", degats_orc, Troll_Pv);
+            std::println("L'orc attaque le troll, il lui a cause {} de degats! Troll: {} pv", orc_degats, Troll_Pv);
         }
 
         //We exit the loop if Troll's pv are 0
         if (Troll_Pv <= 0)
         {
-            std::println("Le troll est mort! L'orc a gagne");
+            std::println("Le troll est mort! L'orc a gagne en {} tours", tours);
             break;
         }
         //Troll's damage is calculated
-        int degats_troll  = 0;
-        int jet_troll = lancer_de(10);
+        int troll_degats = executer_attaque(Troll_Att, Orc_Def);
+        Orc_Pv -= troll_degats;
 
-        switch (jet_troll)
-        {
-            case 1:
-                std::println("Dommage! Le troll a manque son coup!");
-                degats_troll = 0;
-                continue;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                std::println("Coup normal");
-                degats_troll = calculer_degats(Troll_Att, Troll_Def);
-                Orc_Pv -= degats_troll;
-                break;
-            case 10:
-                std::println("Coup critique! Degats doubles");
-                degats_troll = calculer_degats(Troll_Att, Troll_Def) * 2;
-                Orc_Pv -= degats_troll;
-                break;
-            default:
-                break;
-        }
 
         // Orc's PV cannot be below 0
         if (Orc_Pv < 0)
         {
             Orc_Pv = 0;
         }
-        std::println("Le troll attaque l'orc, il lui a cause {} de degats! Orc : {} pv", degats_troll, Orc_Pv);
+        if (troll_degats == 0)
+        {
+        }
+        else
+        {
+            std::println("Le troll attaque l'orc, il lui a cause {}  de degats! Orc : {} pv", troll_degats, Orc_Pv);
+        }
         //We exit the loop if Orc's pv are 0
         if (Orc_Pv <= 0)
         {
-            std::println("L'orc est mort! Le troll a gagne");
+            std::println("L'orc est mort! Le troll a gagne en {} tours", tours);
             break;
         }
     }while (Troll_Pv > 0 && Orc_Pv > 0);
