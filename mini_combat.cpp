@@ -3,6 +3,7 @@
 //
 
 #include <cstdlib>
+#include <iostream>
 #include <print>
 
 int lancer_de(int faces)
@@ -52,4 +53,18 @@ int executer_attaque(int attaque, int defense)
 
     }
     return degats;
+}
+
+int options_joueur()
+{
+    int choix = 0;
+    do {
+        std::println("Que voulez vous faire? [1. Attaque | 2. Potion | 3. Fuir]");
+        std::cin >> choix;
+        if (choix < 1 || choix > 3)
+        {
+            std::println("Choix invalide, recommence!");
+        }
+    }while (choix < 1 || choix > 3);
+    return choix;
 }

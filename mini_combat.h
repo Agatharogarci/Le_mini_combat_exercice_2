@@ -10,3 +10,4 @@
 int lancer_de(int faces);
 int calculer_degats(int attaque, int defense);
 int executer_attaque(int attaque, int defense);
+int options_joueur();
